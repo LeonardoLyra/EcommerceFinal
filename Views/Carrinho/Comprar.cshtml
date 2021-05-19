@@ -1,0 +1,26 @@
+@model Item
+
+<table class="table table-hover">
+
+<tr>
+    <td>@Model.IdPedido</td>
+    <td>@Model.Produto</td>
+    <td>
+        <textarea title="Quantidade">@Model.Quantidade</textarea>
+    </td>
+    <td>@Model.Valor</td>
+    <td>@Model.ValorTotal</td>
+
+</tr>
+</table>
+
+<table class="table table-hover">
+
+<tr>
+    
+    <a class="btn btn-primary" href="/produtos/index">Continuar Comprando</a>
+    <a class="btn btn-primary" href="/home/index">Finalizar Compra</a>
+
+</tr>
+</table>
+
