@@ -16,7 +16,7 @@ namespace Ecommerce2021a.Data
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = base.connectionDB;
             cmd.CommandText = @"Select ip.*, p.Nome From ItemPedido ip inner Join
-                                Produto p on p.IdProduto = ip.IdProduto
+                                Produtos p on p.IdProduto = ip.IdProduto
                                 Where ip.IdPedido = @id";
 
             cmd.Parameters.AddWithValue("@id", id);
