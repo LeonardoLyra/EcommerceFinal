@@ -32,6 +32,8 @@ namespace Ecommerce2021a
                 options.Cookie.IsEssential = true;
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddControllersWithViews();
 
 

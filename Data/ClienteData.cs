@@ -177,6 +177,44 @@ namespace Ecommerce2021a.Data
             cmd.ExecuteNonQuery();
         }
 
+        public Cliente Read(ClienteViewModel model)
+        {
+            //declarando um objeto cliente e inicializando como null
+
+            Cliente cliente = null;
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = base.connectionDB;//conexão com o Banco de Dados
+
+            //string SQL para ser executada no Banco de Dados
+            cmd.CommandText = @"Select * from Cliente Where Email = @email and Senha = @senha";
+
+            //inserindo o valor do id recebido a string SQL
+            cmd.Parameters.AddWithValue("@email", model.Email);
+            cmd.Parameters.AddWithValue("@senha", model.Senha);
+
+            //Executando o comando SQL no Banco de Dados
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            //verificando se, após a consulta, retornou um registro
+            if(reader.Read())
+            {
+                //instanciando o objeto cliente declarado anteriormente
+                //e colocando os dados do registro da tabela no objeto
+
+                cliente = new Cliente
+                {
+                    IdCliente = (int)reader["IdCliente"],
+                    Nome = (string)reader["Nome"],
+                    Email = (string)reader["Email"]
+                };
+            }
+
+            //retornando o objeto cliente, que pode ser null ou com as informações
+            //recebidas na consulta
+            return cliente;
+        }//consulta id
+
 
     }
 }

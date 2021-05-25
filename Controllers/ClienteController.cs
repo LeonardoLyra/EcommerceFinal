@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Ecommerce2021a.Controllers
@@ -119,6 +120,37 @@ namespace Ecommerce2021a.Controllers
                 data.Update(cliente);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new ClienteViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Login(ClienteViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            using(var data = new ClienteData())
+            {
+                var user = data.Read(model);
+                
+                if(user == null)
+                {
+                    ViewBag.Message = "Email e/ou senha incorretos!";
+                    return View(model);
+                }
+
+                HttpContext.Session.SetString("user", JsonSerializer.Serialize<Cliente>(user));
+
+                return RedirectToAction("Index", "Produto");
+            }
+
+            
+            
         }
     }
 }

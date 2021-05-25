@@ -38,7 +38,7 @@ else
                                 <th>Nome</th>
                                 <th>Descrição</th>
                                 <th>Valor</th>
-                                <th>Categoria</th>
+                                <th>Quantidade</th>
                                 <th>Total</th>
                             </tr>
                             @foreach (var item in Model)
@@ -51,25 +51,26 @@ else
                                     <td>@item.Quantidade</td>
                                     <td>@item.ValorTotal</td>
                                     <td>
-                                        <a class="btn btn-sm btn-danger" href="/produto/delete">Apagar</a>
-                                        <a class="btn btn-sm btn-warning" href="/produto/update">Editar</a>
-                                        @if (item.Quantidade == 1)
-                                        {
-                                            <a class="btn btn-sm btn-info" href="/carrinho/comprar">Comprar</a>
-
-                                        }
+                                        <a class="btn btn-sm btn-danger" href="/carrinho/index/@item.Produto.IdProduto" onclick="removidoBox()">Remover
+                                            do Carrinho</a>
                                     </td>
                                 </tr>
                             }
                         </table>
                     </div>
                 </div>
-                <a href="/produto/index" class="btn btn-info cart-btn-transform mt-2 float-right m-2" data-abc="true">Continuar
+                <a href="/produto/index" class="btn btn-info cart-btn-transform mt-2 float-right m-2"
+                data-abc="true">Continuar
                     Comprando</a>
-                <a href="/home/index" class="btn btn-primary cart-btn-transform mt-2 float-right" data-abc="true">Finalizar Compra</a>
+                <a href="/produto/index" class="btn btn-primary cart-btn-transform mt-2 float-right"
+                data-abc="true">Finalizar Compra</a>
             </div>
         </div>
     </div>
 
-
+    <script>
+        function removidoBox() {
+            alert("Item Removido Com Sucesso!");
+        }
+    </script>
 }
