@@ -92,11 +92,14 @@ namespace Ecommerce2021a.Controllers
 
                 var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);    
 
-                if(item != null)
-                {
+                if(item.Quantidade > 1)
+                {   
                     item.Quantidade--;
                 }
-
+                else
+                {
+                    lista.Remove(item);
+                }
 
                 //TODO Converter Lista para String (Json)
                 carrinho = System.Text.Json.JsonSerializer.Serialize<List<Item>>(lista);
