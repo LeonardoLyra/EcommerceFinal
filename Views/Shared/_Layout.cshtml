@@ -30,27 +30,28 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Produto"
                                 asp-action="Index">Produto</a>
                         </li>
-                        <li class="nav-item">
-                            @{
-                                string json = HttpContextAccessor.HttpContext.Session.GetString("user");
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                @{
+                                    string json = HttpContextAccessor.HttpContext.Session.GetString("user");
 
-                                if (json != null)
-                                {
-                                    Cliente user = JsonSerializer.Deserialize<Cliente>(json);
-
-                                    if (user != null)
+                                    if (json != null)
                                     {
-                                        <a class="nav-link text-dark">Bem vindo @user.Nome</a>
+                                        Cliente user = JsonSerializer.Deserialize<Cliente>(json);
+
+                                        if (user != null)
+                                        {
+                                            <a class="nav-link text-dark asp-area=" asp-controller="Cliente" asp-action="Index">Bem
+                                                vindo @user.Nome</a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente"
+                                    asp-action="Login">Login</a>
                                     }
                                 }
-                                else
-                                {
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cliente"
-                                asp-action="Login">Login</a>
-                                }
-                            }
-                        </li>
-                        <ul class="navbar-nav ml-auto">
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Carrinho" asp-action="Index">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"

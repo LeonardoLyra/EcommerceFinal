@@ -104,7 +104,6 @@ namespace Ecommerce2021a.Data
             cmd.Parameters.AddWithValue("@nome", produto.Nome);
             cmd.Parameters.AddWithValue("@desc", produto.Descricao);
             cmd.Parameters.AddWithValue("@valor", produto.Valor);
-            cmd.Parameters.AddWithValue("@id", produto.IdProduto);
             cmd.Parameters.AddWithValue("@idC", produto.IdCategoria);
 
             cmd.ExecuteNonQuery();

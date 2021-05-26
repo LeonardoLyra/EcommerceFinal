@@ -13,9 +13,54 @@ namespace Ecommerce2021a.Controllers
     public class ClienteController : Controller
     {
         //private static List<ClienteL clientes = new List<Cliente>();
+
+        [HttpGet]
         public IActionResult Index(Cliente novoCliente)
         {
+            var user = HttpContext.Session.GetString("user");
+
+            novoCliente = JsonSerializer.Deserialize<Cliente>(user);
+
             return View(novoCliente);
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(IFormCollection cliente)
+        {
+            string nome = cliente["Nome"];
+            string email = cliente["Email"];
+            string senha = cliente["Senha"];
+
+            if(nome.Length < 6)
+            {
+                ViewBag.Mensagem = "Nome deve conter 6 ou mais carecteres";
+            }
+            if(!email.Contains("@"))
+            {
+                ViewBag.Mensagem = "Email inválido";
+                return View();
+            }
+            if(senha.Length < 6)
+            {
+                ViewBag.Mensagem = "Senha deve conter 6 caracteres ou mais";
+                return View();
+            }
+
+            var novoCliente = new Cliente();
+            novoCliente.Nome = cliente["nome"];
+            novoCliente.Email = cliente["email"];
+            novoCliente.Senha = cliente["senha"];
+
+            using (var data = new ClienteData())
+                data.Create(novoCliente);
+
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
@@ -125,6 +170,7 @@ namespace Ecommerce2021a.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            
             return View(new ClienteViewModel());
         }
 
@@ -147,10 +193,10 @@ namespace Ecommerce2021a.Controllers
                 HttpContext.Session.SetString("user", JsonSerializer.Serialize<Cliente>(user));
 
                 return RedirectToAction("Index", "Produto");
-            }
-
-            
-            
+            } 
         }
+
+
+        
     }
 }

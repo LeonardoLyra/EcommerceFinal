@@ -65,7 +65,7 @@ namespace Ecommerce2021a
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Produto}/{action=Index}/{id?}");
+                    pattern: "/{controller=cliente}/{action=login}/{id?}");
                 //controller = classe / action = método / id...
 
             });
