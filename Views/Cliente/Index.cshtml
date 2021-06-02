@@ -1,26 +1,72 @@
 ﻿@model Cliente
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json
 
-<br/>
-@if(@Model == null)
-{
-    <h3>@ViewBag.Mensagem</h3>
-}
-else
-{
-    <h3>@ViewBag.Mensagem @Model.Nome</h3>
-    <table class="table table-hover">
-        <tr>
-            <td>@Model.IdCliente</td>
-            <td>@Model.Nome</td>
-            <td>@Model.Email</td>
-            <td>
-                <a class="btn btn-sm btn-danger" href="/cliente/delete/@Model.IdCliente">Apagar</a>
-                <a class="btn btn-sm btn-warning" href="/cliente/update/@Model.IdCliente">Editar</a>
-                <a class="btn btn-sm btn-info"
-                href="/item/meus_pedidos">Meus Pedidos</a>
-            </td>
+@{
 
-        </tr>
-    </table>
+
+
+
+
+
+
+    ViewData["Title"] = "Cliente - Index";
 }
-<a class="btn btn-primary" href="/cliente/create">Adicionar</a>
+
+@{
+    string json = HttpContextAccessor.HttpContext.Session.GetString("user");
+    Cliente user = JsonSerializer.Deserialize<Cliente>(json);
+
+    if (user.IdCliente == 10)
+    {
+        <br />
+        @if (@Model == null)
+        {
+            <h3>@ViewBag.Mensagem</h3>
+        }
+        else
+        {
+            <h3>@ViewBag.Mensagem @Model.Nome</h3>
+            <table class="table table-hover">
+                <tr>
+                    <td>@Model.IdCliente</td>
+                    <td>@Model.Nome</td>
+                    <td>@Model.Email</td>
+                    <td>
+                        <a class="btn btn-sm btn-danger" href="/cliente/delete/@Model.IdCliente">Apagar</a>
+                        <a class="btn btn-sm btn-warning" href="/cliente/update/@Model.IdCliente">Editar</a>
+                        <a class="btn btn-sm btn-info" href="/item/meus_pedidos">Meus Pedidos</a>
+                    </td>
+
+                </tr>
+            </table>
+        }
+        <a class="btn btn-primary" href="/cliente/create">Adicionar</a>
+    }
+    else
+    {
+        <br />
+        @if (@Model == null)
+        {
+            <h3>@ViewBag.Mensagem</h3>
+        }
+        else
+        {
+            <h3>@ViewBag.Mensagem @Model.Nome</h3>
+            <table class="table table-hover">
+                <tr>
+                    <td>@Model.IdCliente</td>
+                    <td>@Model.Nome</td>
+                    <td>@Model.Email</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="/cliente/update/@Model.IdCliente">Editar</a>
+                        <a class="btn btn-sm btn-info" href="/item/meus_pedidos">Meus Pedidos</a>
+                    </td>
+
+                </tr>
+            </table>
+        }
+    }
+
+}

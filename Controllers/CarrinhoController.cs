@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Ecommerce2021a.Controllers
@@ -19,7 +20,7 @@ namespace Ecommerce2021a.Controllers
 
             var carrinho = HttpContext.Session.GetString("Carrinho");
 
-            if(carrinho != null)
+            if (carrinho != null)
             {
                 //TODO Converter String para Lista(Json)
                 lista = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(carrinho);
@@ -36,7 +37,7 @@ namespace Ecommerce2021a.Controllers
 
             var carrinho = HttpContext.Session.GetString("Carrinho");
 
-            if(carrinho != null)
+            if (carrinho != null)
             {
                 //TODO Converter String para Lista(Json)
                 lista = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(carrinho);
@@ -48,10 +49,10 @@ namespace Ecommerce2021a.Controllers
 
                 var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);
 
-                if(item == null)
+                if (item == null)
                 {
                     Produto produto = data.Read(id);
-                    
+
                     item = new Item();
                     item.Produto = produto;
                     item.Quantidade = 1;
@@ -66,7 +67,7 @@ namespace Ecommerce2021a.Controllers
 
                 //TODO Converter Lista para String (Json)
                 carrinho = System.Text.Json.JsonSerializer.Serialize<List<Item>>(lista);
-                
+
                 HttpContext.Session.SetString("Carrinho", carrinho);
 
                 return RedirectToAction("Index");
@@ -80,7 +81,7 @@ namespace Ecommerce2021a.Controllers
 
             var carrinho = HttpContext.Session.GetString("Carrinho");
 
-            if(carrinho != null)
+            if (carrinho != null)
             {
                 //TODO Converter String para Lista(Json)
                 lista = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(carrinho);
@@ -90,10 +91,10 @@ namespace Ecommerce2021a.Controllers
             using (var data = new ProdutoData())
             {
 
-                var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);    
+                var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);
 
-                if(item.Quantidade > 1)
-                {   
+                if (item.Quantidade > 1)
+                {
                     item.Quantidade--;
                 }
                 else
@@ -103,11 +104,48 @@ namespace Ecommerce2021a.Controllers
 
                 //TODO Converter Lista para String (Json)
                 carrinho = System.Text.Json.JsonSerializer.Serialize<List<Item>>(lista);
-                
+
                 HttpContext.Session.SetString("Carrinho", carrinho);
 
                 return RedirectToAction("Index");
             }
+        }
+
+
+        [HttpGet]
+        public IActionResult Finalizar()
+        {
+            List<Item> lista = new List<Item>();
+
+            string carrinho = HttpContext.Session.GetString("carrinho");
+
+            var user = HttpContext.Session.GetString("user");
+
+            var clienteLogado = JsonSerializer.Deserialize<Cliente>(user);
+
+            if (carrinho != null)
+            {
+                //TODO Converter String para Lista(Json)
+                lista = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(carrinho);
+
+                using (var data = new PedidoData())
+                {
+                    Pedido pedido = new Pedido();
+
+                    foreach(var item in lista)
+                    {
+                        pedido.IdCliente = Convert.ToInt32(clienteLogado.IdCliente);
+                        pedido.Itens.Add(item);
+                    }
+                    
+                    data.Create(pedido);
+                
+                }
+
+                HttpContext.Session.Remove("carrinho");
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

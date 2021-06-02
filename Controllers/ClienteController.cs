@@ -196,6 +196,16 @@ namespace Ecommerce2021a.Controllers
             } 
         }
 
+        [HttpGet]
+        public IActionResult Sair()
+        {
+
+            HttpContext.Session.Remove("user");
+
+            return RedirectToAction("Login", "Cliente");
+             
+        }
+
 
         
     }
