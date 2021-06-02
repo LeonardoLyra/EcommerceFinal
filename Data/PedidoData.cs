@@ -18,7 +18,7 @@ namespace Ecommerce2021a.Data
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = connectionDB;
                 cmd.Transaction = transaction;
-                cmd.CommandText = @"Insert into Pedidos values (@idCliente, @data);" + "Select @@IDENTITY";
+                cmd.CommandText = @"Insert into Pedido values (@idCliente, @data); Select @@IDENTITY";
                 cmd.Parameters.AddWithValue("@idCliente", pedido.IdCliente);
                 cmd.Parameters.AddWithValue("@data", DateTime.Now);
 
@@ -34,9 +34,9 @@ namespace Ecommerce2021a.Data
                     cmdItem.Connection = connectionDB;
                     cmdItem.Transaction = transaction;
                     cmdItem.CommandText = @"Insert into ItemPedido values" +
-                                           "(@idpedido, @idproduto, @quantidade, @preco";
+                                           "(@idpedido, @idproduto, @quantidade, @preco)";
 
-                    cmdItem.Parameters.AddWithValue("@idpedido", item.IdPedido);
+                    cmdItem.Parameters.AddWithValue("@idpedido", idPedido);
                     cmdItem.Parameters.AddWithValue("@idproduto", item.Produto.IdProduto);
                     cmdItem.Parameters.AddWithValue("@quantidade", item.Quantidade);
                     cmdItem.Parameters.AddWithValue("@preco", item.Valor);
@@ -51,6 +51,7 @@ namespace Ecommerce2021a.Data
             {
                 //desfaz as operações de insert caso dê algum problema e elas não
                 //possam ser executadas
+                Console.WriteLine(ex.Message);
                 transaction.Rollback();
             }
         }

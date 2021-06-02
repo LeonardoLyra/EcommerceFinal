@@ -117,7 +117,7 @@ namespace Ecommerce2021a.Controllers
         {
             List<Item> lista = new List<Item>();
 
-            string carrinho = HttpContext.Session.GetString("carrinho");
+            string carrinho = HttpContext.Session.GetString("Carrinho");
 
             var user = HttpContext.Session.GetString("user");
 
@@ -132,9 +132,10 @@ namespace Ecommerce2021a.Controllers
                 {
                     Pedido pedido = new Pedido();
 
+                    pedido.IdCliente = Convert.ToInt32(clienteLogado.IdCliente);
+
                     foreach(var item in lista)
                     {
-                        pedido.IdCliente = Convert.ToInt32(clienteLogado.IdCliente);
                         pedido.Itens.Add(item);
                     }
                     
@@ -142,7 +143,7 @@ namespace Ecommerce2021a.Controllers
                 
                 }
 
-                HttpContext.Session.Remove("carrinho");
+                HttpContext.Session.Remove("Carrinho");
             }
 
             return RedirectToAction("Index");
