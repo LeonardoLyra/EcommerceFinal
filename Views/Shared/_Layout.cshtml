@@ -41,8 +41,16 @@
 
                                         if (user != null)
                                         {
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Bem
-                                                vindo @user.Nome</a>
+                                            if (user.IdCliente == 10)
+                                            {
+                                                <a class="nav-link text-dark" asp-controller="Cliente" asp-action="IndexAdmin">Bem vindo @user.Nome</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="nav-link text-dark" asp-controller="Cliente"
+                                    asp-action="Index">Bem vindo @user.Nome</a>
+                                            }
+
                                         }
                                     }
                                     else
@@ -53,7 +61,8 @@
                                 }
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Sair">Sair</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente"
+                                    asp-action="Sair">Sair</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Carrinho" asp-action="Index">
@@ -65,10 +74,6 @@
                                 </a>
                             </li>
                         </ul>
-
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li> *@
                     </ul>
                 </div>
             </div>

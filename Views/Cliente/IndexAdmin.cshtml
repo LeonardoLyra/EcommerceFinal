@@ -1,0 +1,26 @@
+@model List<Cliente>
+
+<br />
+<h3>Controle de Usuários</h3>
+<table class="table table-hover">
+
+    <tr>
+        <th>ID Cliente</th>
+        <th>Nome</th>
+        <th>Email</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.IdCliente</td>
+            <td>@item.Nome</td>
+            <td>@item.Email</td>
+            <td>
+                <a class="btn btn-sm btn-danger" href="/cliente/delete/@item.IdCliente">Apagar</a>
+                <a class="btn btn-sm btn-warning" href="/cliente/update/@item.IdCliente">Editar</a>
+            </td>
+        </tr>
+    }
+
+</table>

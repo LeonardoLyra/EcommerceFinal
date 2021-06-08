@@ -12,7 +12,7 @@
                     <div class="card-body cart">
                         <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png"
                             width="130" height="130" class="img-fluid mb-4 mr-3">
-                            <h3><strong>Seu Carrinho Está Vázio</strong></h3>
+                            <h3><strong>Seu Carrinho Está Vazio</strong></h3>
                             <h4>Peça algo agora :)</h4> <a href="/produto/index"
                             class="btn btn-primary cart-btn-transform m-3" data-abc="true">Continuar Comprando</a>
                         </div>
@@ -48,7 +48,7 @@ else
                                     <td>@item.Produto.Nome</td>
                                     <td>@item.Produto.Descricao</td>
                                     <td>@item.Produto.Valor</td>
-                                    <td>@item.Quantidade</td>
+                                    <td> <a href="/carrinho/diminuirQtd/@item.Produto.IdProduto" class="link-preto">-</a> @item.Quantidade <a href="/carrinho/aumentarQtd/@item.Produto.IdProduto" class="link-preto">+</a> </td>
                                     <td>@item.ValorTotal</td>
                                     <td>
                                         <a class="btn btn-sm btn-danger" href="/carrinho/remover/@item.Produto.IdProduto" onclick="removidoBox()">Remover

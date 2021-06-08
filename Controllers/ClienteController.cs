@@ -37,16 +37,16 @@ namespace Ecommerce2021a.Controllers
             string email = cliente["Email"];
             string senha = cliente["Senha"];
 
-            if(nome.Length < 6)
+            if (nome.Length < 6)
             {
                 ViewBag.Mensagem = "Nome deve conter 6 ou mais carecteres";
             }
-            if(!email.Contains("@"))
+            if (!email.Contains("@"))
             {
                 ViewBag.Mensagem = "Email inválido";
                 return View();
             }
-            if(senha.Length < 6)
+            if (senha.Length < 6)
             {
                 ViewBag.Mensagem = "Senha deve conter 6 caracteres ou mais";
                 return View();
@@ -76,16 +76,16 @@ namespace Ecommerce2021a.Controllers
             string email = cliente["Email"];
             string senha = cliente["Senha"];
 
-            if(nome.Length < 6)
+            if (nome.Length < 6)
             {
                 ViewBag.Mensagem = "Nome deve conter 6 ou mais carecteres";
             }
-            if(!email.Contains("@"))
+            if (!email.Contains("@"))
             {
                 ViewBag.Mensagem = "Email inválido";
                 return View();
             }
-            if(senha.Length < 6)
+            if (senha.Length < 6)
             {
                 ViewBag.Mensagem = "Senha deve conter 6 caracteres ou mais";
                 return View();
@@ -109,7 +109,7 @@ namespace Ecommerce2021a.Controllers
             string email = cliente["Email"];
             string senha = cliente["Senha"];
 
-            if(!email.Equals(" "))
+            if (!email.Equals(" "))
             {
                 var cli = new Cliente();
 
@@ -122,7 +122,7 @@ namespace Ecommerce2021a.Controllers
                 using (var data = new ClienteData())
                     c = data.Read(cli.Email);
 
-                if(c.Senha == cli.Senha)
+                if (c.Senha == cli.Senha)
                 {
                     ViewBag.Mensagem = "Olá";
                     return View("Index", c);
@@ -136,6 +136,13 @@ namespace Ecommerce2021a.Controllers
             }
 
             return View("Create");
+        }
+
+        [HttpGet]
+        public IActionResult IndexAdmin()
+        {
+            using (var data = new ClienteData())
+                return View(data.Read());
         }
 
         public IActionResult Delete(int id)
@@ -158,7 +165,7 @@ namespace Ecommerce2021a.Controllers
         {
             cliente.IdCliente = id;
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(cliente);
 
             using (var data = new ClienteData())
@@ -170,21 +177,21 @@ namespace Ecommerce2021a.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            
+
             return View(new ClienteViewModel());
         }
 
         [HttpPost]
         public IActionResult Login(ClienteViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
-            using(var data = new ClienteData())
+            using (var data = new ClienteData())
             {
                 var user = data.Read(model);
-                
-                if(user == null)
+
+                if (user == null)
                 {
                     ViewBag.Message = "Email e/ou senha incorretos!";
                     return View(model);
@@ -193,7 +200,7 @@ namespace Ecommerce2021a.Controllers
                 HttpContext.Session.SetString("user", JsonSerializer.Serialize<Cliente>(user));
 
                 return RedirectToAction("Index", "Produto");
-            } 
+            }
         }
 
         [HttpGet]
@@ -203,10 +210,10 @@ namespace Ecommerce2021a.Controllers
             HttpContext.Session.Remove("user");
 
             return RedirectToAction("Login", "Cliente");
-             
+
         }
 
 
-        
+
     }
 }

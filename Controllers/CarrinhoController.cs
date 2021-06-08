@@ -92,6 +92,36 @@ namespace Ecommerce2021a.Controllers
             {
 
                 var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);
+               
+                lista.Remove(item);
+
+                //TODO Converter Lista para String (Json)
+                carrinho = System.Text.Json.JsonSerializer.Serialize<List<Item>>(lista);
+
+                HttpContext.Session.SetString("Carrinho", carrinho);
+
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult DiminuirQtd(int id)
+        {
+            List<Item> lista = new List<Item>();
+
+            var carrinho = HttpContext.Session.GetString("Carrinho");
+
+            if (carrinho != null)
+            {
+                //TODO Converter String para Lista(Json)
+                lista = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(carrinho);
+            }
+
+
+            using (var data = new ProdutoData())
+            {
+
+                var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);
 
                 if (item.Quantidade > 1)
                 {
@@ -101,6 +131,36 @@ namespace Ecommerce2021a.Controllers
                 {
                     lista.Remove(item);
                 }
+
+                //TODO Converter Lista para String (Json)
+                carrinho = System.Text.Json.JsonSerializer.Serialize<List<Item>>(lista);
+
+                HttpContext.Session.SetString("Carrinho", carrinho);
+
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AumentarQtd(int id)
+        {
+            List<Item> lista = new List<Item>();
+
+            var carrinho = HttpContext.Session.GetString("Carrinho");
+
+            if (carrinho != null)
+            {
+                //TODO Converter String para Lista(Json)
+                lista = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(carrinho);
+            }
+
+
+            using (var data = new ProdutoData())
+            {
+
+                var item = lista.SingleOrDefault(i => i.Produto.IdProduto == id);
+
+                item.Quantidade++;
 
                 //TODO Converter Lista para String (Json)
                 carrinho = System.Text.Json.JsonSerializer.Serialize<List<Item>>(lista);
