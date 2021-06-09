@@ -17,11 +17,15 @@ namespace Ecommerce2021a.Controllers
         [HttpGet]
         public IActionResult Index(Cliente novoCliente)
         {
+
             var user = HttpContext.Session.GetString("user");
 
             novoCliente = JsonSerializer.Deserialize<Cliente>(user);
 
-            return View(novoCliente);
+            using (var data = new ClienteData())
+            {
+                return View(data.Read(Convert.ToInt32(novoCliente.IdCliente)));
+            }
         }
 
         [HttpGet]
