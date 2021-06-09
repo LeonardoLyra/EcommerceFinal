@@ -154,7 +154,19 @@ namespace Ecommerce2021a.Controllers
             using (var data = new ClienteData())
                 data.Delete(id);
 
-            return RedirectToAction("Index");
+            var user = HttpContext.Session.GetString("user");
+
+            var clienteLogado = JsonSerializer.Deserialize<Cliente>(user);
+
+            if(clienteLogado.IdCliente == 10)
+            {
+                return RedirectToAction("IndexAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         [HttpGet]
@@ -175,7 +187,18 @@ namespace Ecommerce2021a.Controllers
             using (var data = new ClienteData())
                 data.Update(cliente);
 
-            return RedirectToAction("Index");
+            var user = HttpContext.Session.GetString("user");
+
+            var clienteLogado = JsonSerializer.Deserialize<Cliente>(user);
+
+            if(clienteLogado.IdCliente == 10)
+            {
+                return RedirectToAction("IndexAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]

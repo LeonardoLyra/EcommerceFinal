@@ -66,7 +66,9 @@ namespace Ecommerce2021a.Controllers
             public IActionResult Delete(int id)
             {
                 using (var data = new ProdutoData())
+                {
                     data.Delete(id);
+                }
 
                 return RedirectToAction("Index");
             }

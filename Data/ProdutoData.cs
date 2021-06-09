@@ -32,7 +32,7 @@ namespace Ecommerce2021a.Data
 
         //Read = Select
 
-        public List<Produto>Read()
+        public List<Produto> Read()
         {
             List<Produto> lista = new List<Produto>();
 
@@ -75,7 +75,7 @@ namespace Ecommerce2021a.Data
 
             SqlDataReader reader = cmd.ExecuteReader();
 
-            if(reader.Read())
+            if (reader.Read())
             {
                 produto = new Produto
                 {
@@ -111,18 +111,27 @@ namespace Ecommerce2021a.Data
 
         public void Delete(int id)
         {
-            //criado o cmd (comando SQl) para executar um comando SQL no Banco de Dados
-            SqlCommand cmd = new SqlCommand();
-            //conexão com o Banco de Dados
-            cmd.Connection = base.connectionDB;
-            //criada a String SQL
-            cmd.CommandText = @"Delete from Produtos Where IdProduto = @id";
+            try
+            {
+                //criado o cmd (comando SQl) para executar um comando SQL no Banco de Dados
+                SqlCommand cmd = new SqlCommand();
+                //conexão com o Banco de Dados
+                cmd.Connection = base.connectionDB;
+                //criada a String SQL
+                cmd.CommandText = @"Delete from Produtos Where IdProduto = @id";
 
-            cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
-            //Execução do comando Delete no Banco de Dados
-            cmd.ExecuteNonQuery();
+                //Execução do comando Delete no Banco de Dados
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Pode haver uma compra atrelada ao ID deste Produto \n\n" + ex);
+            }
+
+
         }
 
+        }
     }
-}

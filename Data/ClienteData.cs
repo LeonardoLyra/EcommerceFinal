@@ -50,7 +50,7 @@ namespace Ecommerce2021a.Data
 
                 lista = new List<Cliente>();
 
-                while(reader.Read())
+                while (reader.Read())
                 {
                     Cliente cliente = new Cliente();
 
@@ -63,7 +63,7 @@ namespace Ecommerce2021a.Data
 
                 }
             }
-            catch(SqlException sqlerror)
+            catch (SqlException sqlerror)
             {
                 Console.WriteLine("Erro" + sqlerror);
             }
@@ -91,7 +91,7 @@ namespace Ecommerce2021a.Data
             SqlDataReader reader = cmd.ExecuteReader();
 
             //verificando se, após a consulta, retornou um registro
-            if(reader.Read())
+            if (reader.Read())
             {
                 //instanciando o objeto cliente declarado anteriormente
                 //e colocando os dados do registro da tabela no objeto
@@ -127,7 +127,7 @@ namespace Ecommerce2021a.Data
             SqlDataReader reader = cmd.ExecuteReader();
 
             //verificando se, após a consulta, retornou um registro
-            if(reader.Read())
+            if (reader.Read())
             {
                 //instanciando o objeto cliente declarado anteriormente
                 //e colocando os dados do registro da tabela no objeto
@@ -162,19 +162,27 @@ namespace Ecommerce2021a.Data
             cmd.ExecuteNonQuery();
         }
 
-        public void Delete (int id)
+        public void Delete(int id)
         {
-            //criado o cmd (comando SQl) para executar um comando SQL no Banco de Dados
-            SqlCommand cmd = new SqlCommand();
-            //conexão com o Banco de Dados
-            cmd.Connection = base.connectionDB;
-            //criada a String SQL
-            cmd.CommandText = @"Delete from Cliente Where IdCliente = @id";
+            try
+            {
+                //criado o cmd (comando SQl) para executar um comando SQL no Banco de Dados
+                SqlCommand cmd = new SqlCommand();
+                //conexão com o Banco de Dados
+                cmd.Connection = base.connectionDB;
+                //criada a String SQL
+                cmd.CommandText = @"Delete from Cliente Where IdCliente = @id";
 
-            cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
-            //Execução do comando Delete no Banco de Dados
-            cmd.ExecuteNonQuery();
+                //Execução do comando Delete no Banco de Dados
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Pode haver uma compra atrelada ao ID deste Produto \n\n" + ex);
+            }
+
         }
 
         public Cliente Read(ClienteViewModel model)
@@ -197,7 +205,7 @@ namespace Ecommerce2021a.Data
             SqlDataReader reader = cmd.ExecuteReader();
 
             //verificando se, após a consulta, retornou um registro
-            if(reader.Read())
+            if (reader.Read())
             {
                 //instanciando o objeto cliente declarado anteriormente
                 //e colocando os dados do registro da tabela no objeto
