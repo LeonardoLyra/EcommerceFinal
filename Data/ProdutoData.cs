@@ -109,7 +109,7 @@ namespace Ecommerce2021a.Data
             cmd.ExecuteNonQuery();
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
@@ -124,10 +124,14 @@ namespace Ecommerce2021a.Data
 
                 //Execução do comando Delete no Banco de Dados
                 cmd.ExecuteNonQuery();
+
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Pode haver uma compra atrelada ao ID deste Produto \n\n" + ex);
+
+                return false;
             }
 
 

@@ -152,7 +152,17 @@ namespace Ecommerce2021a.Controllers
         public IActionResult Delete(int id)
         {
             using (var data = new ClienteData())
-                data.Delete(id);
+            {
+                if (data.Delete(id))
+                {
+                    ViewData["Mensagem"] = "A Exclusão foi realizada com sucesso";
+                }
+                else
+                {
+                    ViewData["Mensagem"] = "A Exclusão falhou, pode haver alguma compra atrelada com o ID deste cliente";
+                }
+            }
+                
 
             var user = HttpContext.Session.GetString("user");
 
