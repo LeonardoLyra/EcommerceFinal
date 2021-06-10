@@ -5,16 +5,35 @@
 
 @{
 
+
+
     ViewData["Title"] = "Produto - Index";
 }
 
 @{
+
     string json = HttpContextAccessor.HttpContext.Session.GetString("user");
+
     Cliente user = JsonSerializer.Deserialize<Cliente>(json);
 
+
+
     if (user.IdCliente == 10)
+
     {
-        <div class="alert alert-danger">@ViewData["Mensagem"]</div>
+        @if (@TempData["exclusaoSucesso"] != null)
+
+        {
+            <div class="alert alert-success">@TempData["exclusaoSucesso"]</div>
+
+        }
+
+        @if (@TempData["exclusaoErro"] != null)
+
+        {
+            <div class="alert alert-danger">@TempData["exclusaoErro"]</div>
+
+        }
 
         <table class="table table-hover">
 
@@ -26,6 +45,7 @@
                 <th>Categoria</th>
             </tr>
             @foreach (var prod in Model)
+
             {
                 <tr>
                     <td>@prod.IdProduto</td>
@@ -39,13 +59,18 @@
                     </td>
 
                 </tr>
+
             }
         </table>
 
         <a class="btn btn-primary" href="/produto/create">Adcionar</a>
+
     }
 
+
+
     else
+
     {
         <table class="table table-hover">
 
@@ -57,6 +82,10 @@
                 <th>Categoria</th>
             </tr>
             @foreach (var prod in Model)
+
+
+
+
 
 
 
@@ -73,8 +102,12 @@
 
                 </tr>
 
+
+
             }
         </table>
+
+
 
     }
 

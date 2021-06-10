@@ -69,12 +69,12 @@ namespace Ecommerce2021a.Controllers
             {
                 if (data.Delete(id))
                 {
-                    ViewData["Mensagem"] = "A Exclusão foi realizada com sucesso";
+                    TempData["exclusaoSucesso"] = "A Exclusão foi realizada com sucesso";
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewData["Mensagem"] = "A Exclusão falhou, pode haver alguma compra atrelada com o ID deste produto";
+                    TempData["exclusaoErro"] = "A Exclusão falhou, pode haver alguma compra atrelada com o ID deste produto";
                     return RedirectToAction("Index");
                 }
             }

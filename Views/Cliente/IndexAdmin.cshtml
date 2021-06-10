@@ -4,7 +4,16 @@
     ViewData["Title"] = "Cliente - Index Admin";
 }
 
-<div class="alert alert-danger">@ViewData["Mensagem"]</div>
+
+@if (@TempData["exclusaoSucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["exclusaoSucesso"]</div>
+}
+
+@if (@TempData["exclusaoErro"] != null)
+{
+    <div class="alert alert-danger">@TempData["exclusaoErro"]</div>
+}
 
 <br />
 <h3>Controle de Usuários</h3>

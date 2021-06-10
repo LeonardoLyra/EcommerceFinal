@@ -153,15 +153,19 @@ namespace Ecommerce2021a.Controllers
         {
             using (var data = new ClienteData())
             {
-                if (data.Delete(id))
+                bool exclusao = data.Delete(id);
+
+                if (exclusao == true)
                 {
-                    ViewData["Mensagem"] = "A Exclusão foi realizada com sucesso";
+                    TempData["exclusaoSucesso"] = "A Exclusão foi realizada com sucesso";
                 }
                 else
                 {
-                    ViewData["Mensagem"] = "A Exclusão falhou, pode haver alguma compra atrelada com o ID deste cliente";
+                    TempData["exclusaoErro"] = "A Exclusão falhou, pode haver alguma compra atrelada com o ID deste cliente";
                 }
             }
+
+            Console.WriteLine(TempData["exclusao"]);
                 
 
             var user = HttpContext.Session.GetString("user");
